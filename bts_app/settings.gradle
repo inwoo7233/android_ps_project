@@ -1,0 +1,2 @@
+rootProject.name='BTS app'
+include ':app'
