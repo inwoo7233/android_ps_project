@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
         callButton.setOnClickListener() {
             val intentVal = Intent(Intent.ACTION_DIAL)
-            intent.data = Uri.parse("tell:112")
+            //intentVal.data = Uri.parse("tell:112")
             startActivity(intentVal)
         }
     }

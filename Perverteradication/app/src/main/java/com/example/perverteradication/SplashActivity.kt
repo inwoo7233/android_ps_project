@@ -7,14 +7,36 @@ import android.os.Handler
 
 class SplashActivity : AppCompatActivity() {
 
-    val SPLASH_VIEW_TIME: Long = 2000 //2초간 스플래시 화면을 보여줌 (ms)
+    private var mDelayHandler: Handler? = null
+    private val SPLASH_DELAY: Long = 3000 //3 seconds
+
+    internal val mRunnable: Runnable = Runnable {
+        if (!isFinishing) {
+
+            val intent = Intent(applicationContext, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_splash)
 
-        Handler().postDelayed({ //delay를 위한 handler
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
-        }, SPLASH_VIEW_TIME)
+        //Initialize the Handler
+        mDelayHandler = Handler()
+
+        //Navigate with delay
+        mDelayHandler!!.postDelayed(mRunnable, SPLASH_DELAY)
+
+    }
+
+    public override fun onDestroy() {
+
+        if (mDelayHandler != null) {
+            mDelayHandler!!.removeCallbacks(mRunnable)
+        }
+
+        super.onDestroy()
     }
 }
